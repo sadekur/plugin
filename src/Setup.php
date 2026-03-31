@@ -1,5 +1,5 @@
 <?php
-namespace Codexpert\Plugin;
+namespace corevia\Plugin;
 
 error_reporting( 0 );
 
@@ -13,7 +13,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * @package Plugin
  * @subpackage Setup
- * @author Codexpert <hi@codexpert.io>
+ * @author corevia <hi@corevia.io>
  */
 class Setup extends Base {
 
@@ -59,7 +59,7 @@ class Setup extends Base {
 		    return;
 		}
 
-		wp_enqueue_style( 'codexpert-product-wizard', plugins_url( 'assets/css/wizard.css', __FILE__ ), [], '' );
+		wp_enqueue_style( 'corevia-product-wizard', plugins_url( 'assets/css/wizard.css', __FILE__ ), [], '' );
     }
 
     public function get_logo() {

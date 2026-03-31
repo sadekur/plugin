@@ -1,5 +1,5 @@
 <?php
-namespace Codexpert\Plugin;
+namespace corevia\Plugin;
 
 /**
  * if accessed directly, exit.

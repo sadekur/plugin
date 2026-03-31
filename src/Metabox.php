@@ -1,5 +1,5 @@
 <?php
-namespace Codexpert\Plugin;
+namespace corevia\Plugin;
 
 /**
  * if accessed directly, exit.
@@ -11,7 +11,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * @package Plugin
  * @subpackage Metabox
- * @author Codexpert <hi@codexpert.io>
+ * @author corevia <hi@corevia.io>
  */
 class Metabox extends Fields {
 

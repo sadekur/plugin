@@ -1,5 +1,5 @@
 <?php
-namespace Codexpert\Plugin;
+namespace Corevia\Plugin;
 
 /**
  * if accessed directly, exit.
@@ -11,7 +11,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * @package Plugin
  * @subpackage Fields
- * @author Codexpert <hi@codexpert.io>
+ * @author Sadekur Rahman <shadekur.rahman60@gmail.com>
  */
 abstract class Fields extends Base {
 
@@ -44,8 +44,8 @@ abstract class Fields extends Base {
         	wp_enqueue_script( 'chosen' );
         }
 
-        wp_enqueue_style( 'codexpert-product-fields', plugins_url( 'assets/css/fields.css', __FILE__ ), [], '' );
-        wp_enqueue_script( 'codexpert-product-fields', plugins_url( 'assets/js/fields.js', __FILE__ ), [ 'jquery' ], '', true );
+        wp_enqueue_style( 'corevia-product-fields', plugins_url( 'assets/css/fields.css', __FILE__ ), [], '' );
+        wp_enqueue_script( 'corevia-product-fields', plugins_url( 'assets/js/fields.js', __FILE__ ), [ 'jquery' ], '', true );
     }
 
 	public function callback_head() {
