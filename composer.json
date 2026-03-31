@@ -1,5 +1,5 @@
 {
-    "name": "sadekur/plugin",
+    "name": "corevia/plugin",
     "type": "library",
     "description": "Plugin tools for WordPress",
     "keywords": ["plugin","wordpress", "tool"],

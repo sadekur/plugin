@@ -214,14 +214,14 @@ class Table extends \WP_List_Table {
      * Extra table nav section
      */
     public function extra_tablenav( $which ) {
-		do_action( 'cx-plugin_tablenav', $this->config, $which );
+		do_action( 'cv-plugin_tablenav', $this->config, $which );
 	}
 
     /**
      * Overwrites the parent method
      */
     public function single_row( $item ) {
-        printf( '<tr class="%s">', apply_filters( 'cx-plugin_table_row_class', 'cx-table-row', $item ) );
+        printf( '<tr class="%s">', apply_filters( 'cv-plugin_table_row_class', 'cv-table-row', $item ) );
         $this->single_row_columns( $item );
         printf( '</tr>' );
     }

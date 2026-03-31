@@ -16,8 +16,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 abstract class Fields extends Base {
 
 	public function hooks() {
-		if( did_action( "cx-plugin_{$this->config['id']}_loaded" ) ) return;
-		do_action( "cx-plugin_{$this->config['id']}_loaded" );
+		if( did_action( "cv-plugin_{$this->config['id']}_loaded" ) ) return;
+		do_action( "cv-plugin_{$this->config['id']}_loaded" );
 
 		$this->action( 'admin_head', 'callback_head', 99 );
 	}
@@ -62,10 +62,10 @@ abstract class Fields extends Base {
 									$compare = isset( $field['condition']['compare'] ) ? $field['condition']['compare'] : '==';
 
 									if( 'checked' != $compare ) {
-										echo "$('#{$section['id']}-{$key}').change(function(e){if( $('#{$section['id']}-{$key}').val() {$compare} '{$value}' ) { $('#cx-row-{$section['id']}-{$field['id']}').slideDown();}else { $('#cx-row-{$section['id']}-{$field['id']}').slideUp();}}).change();";
+										echo "$('#{$section['id']}-{$key}').change(function(e){if( $('#{$section['id']}-{$key}').val() {$compare} '{$value}' ) { $('#cv-row-{$section['id']}-{$field['id']}').slideDown();}else { $('#cv-row-{$section['id']}-{$field['id']}').slideUp();}}).change();";
 									}
 									else {
-										echo "$('#{$section['id']}-{$key}').change(function(e){if( $('#{$section['id']}-{$key}').is(':checked') ) { $('#cx-row-{$section['id']}-{$field['id']}').slideDown();}else { $('#cx-row-{$section['id']}-{$field['id']}').slideUp();}}).change();";
+										echo "$('#{$section['id']}-{$key}').change(function(e){if( $('#{$section['id']}-{$key}').is(':checked') ) { $('#cv-row-{$section['id']}-{$field['id']}').slideDown();}else { $('#cv-row-{$section['id']}-{$field['id']}').slideUp();}}).change();";
 									}
 								}
 							}
@@ -88,35 +88,35 @@ abstract class Fields extends Base {
 
 		if( $scope == 'option' ) :
 		$icon = $this->generate_icon( $config['icon'] );
-		echo "<h2 class='cx-heading'>{$icon} {$config['title']}</h2>";
+		echo "<h2 class='cv-heading'>{$icon} {$config['title']}</h2>";
 		endif;
 
-		do_action( 'cx-settings-heading', $config );
+		do_action( 'cv-settings-heading', $config );
 
 		if( ! isset( $this->sections ) || count( $this->sections ) <= 0 ) return;
 
 		$tab_position = isset( $config['topnav'] ) && $config['topnav'] == true ? 'top' : 'left';
 		
-		echo "<div class='cx-wrapper-outer'>
-				<div class='cx-wrapper cx-shadow cx-tab-{$tab_position} cx-sections-" . count( $this->sections ) . "'>";
+		echo "<div class='cv-wrapper-outer'>
+				<div class='cv-wrapper cv-shadow cv-tab-{$tab_position} cv-sections-" . count( $this->sections ) . "'>";
 
 		$sections = $this->sections;
 
 		// nav tabs
 		$display = count( $sections ) > 1 ? 'block' : 'none';
 		echo '
-		<div class="cx-navs-wrapper" style="display: ' . $display . '">
-			<ul class="cx-nav-tabs">';
+		<div class="cv-navs-wrapper" style="display: ' . $display . '">
+			<ul class="cv-nav-tabs">';
 			foreach ( $sections as $section ) {
 				$icon = $this->generate_icon( $section['icon'] );
 				$color = isset( $section['color'] ) ? $section['color'] : '#1c2327';
-				echo "<li id='cx-nav-tab-{$section['id']}' class='cx-nav-tab' data-color='{$color}'><a href='#{$section['id']}'>{$icon}<span id='cx-nav-label-{$section['id']}' class='cx-nav-label'> {$section['label']}</span></a></li>";
+				echo "<li id='cv-nav-tab-{$section['id']}' class='cv-nav-tab' data-color='{$color}'><a href='#{$section['id']}'>{$icon}<span id='cv-nav-label-{$section['id']}' class='cv-nav-label'> {$section['label']}</span></a></li>";
 			}
 			echo '</ul>
-		</div><!--div class="cx-navs-wrapper"-->';
+		</div><!--div class="cv-navs-wrapper"-->';
 
 		// form areas
-		echo '<div class="cx-sections-wrapper">';
+		echo '<div class="cv-sections-wrapper">';
 		foreach ( $sections as $section ) {
 			$icon = $this->generate_icon( $section['icon'] );
 			$color = isset( $section['color'] ) ? $section['color'] : '#1c2327';
@@ -124,24 +124,24 @@ abstract class Fields extends Base {
 			$reset_button = isset( $section['reset_button'] ) ? $section['reset_button'] : __( 'Reset Default' );
 			$_nonce = wp_create_nonce();
 
-			echo "<div id='{$section['id']}' class='cx-section' style='display:none'>";
+			echo "<div id='{$section['id']}' class='cv-section' style='display:none'>";
 
-			do_action( 'cx-settings-before-form', $section );
+			do_action( 'cv-settings-before-form', $section );
 
 			$fields = isset( $section['fields'] ) ? $section['fields'] : [];
-			$fields = apply_filters( 'cx-settings-fields', $fields, $section );
+			$fields = apply_filters( 'cv-settings-fields', $fields, $section );
 			$show_form = isset( $section['hide_form'] ) && $section['hide_form'] ? false : true;
-			$show_form = apply_filters( 'cx-settigns-show-form', $show_form, $section );
+			$show_form = apply_filters( 'cv-settigns-show-form', $show_form, $section );
 
 			if( $scope == 'option' && $show_form ) {
 				$page_load = isset( $section['page_load'] ) && $section['page_load'] ? 1 : 0;
 
-				echo "<form id='cx-form-{$section['id']}' class='cx-form'>
-						<div id='cx-message-{$section['id']}' class='cx-message'>
+				echo "<form id='cv-form-{$section['id']}' class='cv-form'>
+						<div id='cv-message-{$section['id']}' class='cv-message'>
 							<img src='" . plugins_url( 'assets/img/checked.png', __FILE__ ) . "' />
 							<p></p>
 						</div>
-						<input type='hidden' name='action' value='cx-settings' />
+						<input type='hidden' name='action' value='cv-settings' />
 						<input type='hidden' name='option_name' value='{$section['id']}' />
 						<input type='hidden' name='page_load' value='{$page_load}' />
 				";
@@ -150,18 +150,18 @@ abstract class Fields extends Base {
 			}
 
 			if( ! isset( $section['no_heading'] ) || $section['no_heading'] !== true ) {
-				echo "<div class='cx-subheading'>";
+				echo "<div class='cv-subheading'>";
 				
-				do_action( 'cx-settings-before-title', $section );
+				do_action( 'cv-settings-before-title', $section );
 			
-				echo "<div class='cx-section-subheading' style='color: {$color}'>{$icon}</span> <span class='cx-subheading-text'>{$section['label']}</div>";
+				echo "<div class='cv-section-subheading' style='color: {$color}'>{$icon}</span> <span class='cv-subheading-text'>{$section['label']}</div>";
 			
-				do_action( 'cx-settings-after-title', $section );
+				do_action( 'cv-settings-after-title', $section );
 
 				if( $show_form && ( ! isset( $section['top_btn'] ) || false !== $section['top_btn'] ) ) {
-					echo "<div id='cx-section-top_btn-{$section['id']}' class='cx-section-top_btn'>";
-					if( $reset_button ) echo "<button type='button' class='button button-hero cx-reset-button' data-option_name='{$section['id']}' data-_nonce='{$_nonce}'>{$reset_button}</button>&nbsp;";
-					if( $submit_button ) echo "<input type='submit' class='button button-hero button-primary cx-submit' value='{$submit_button}' />";
+					echo "<div id='cv-section-top_btn-{$section['id']}' class='cv-section-top_btn'>";
+					if( $reset_button ) echo "<button type='button' class='button button-hero cv-reset-button' data-option_name='{$section['id']}' data-_nonce='{$_nonce}'>{$reset_button}</button>&nbsp;";
+					if( $submit_button ) echo "<input type='submit' class='button button-hero button-primary cv-submit' value='{$submit_button}' />";
 					echo '</div>';
 				}
 
@@ -169,10 +169,10 @@ abstract class Fields extends Base {
 			}
 			
 			if( isset( $section['desc'] ) && $section['desc'] != '' ) {
-				echo "<p class='cx-desc'>{$section['desc']}</p>";
+				echo "<p class='cv-desc'>{$section['desc']}</p>";
 			}
 
-			do_action( 'cx-settings-before-fields', $section );
+			do_action( 'cv-settings-before-fields', $section );
 
 			if( isset( $section['content'] ) && $section['content'] != '' ) {
 				echo $section['content'];
@@ -184,37 +184,37 @@ abstract class Fields extends Base {
 				$this->populate_fields( $fields, $section, $scope );
 			}
 
-			do_action( 'cx-settings-after-fields', $section );
+			do_action( 'cv-settings-after-fields', $section );
 
 			if( $scope == 'option' && $show_form ) {
-				$_is_sticky = isset( $section['sticky'] ) && ! $section['sticky'] ? ' cx-nonsticky-controls' : ' cx-sticky-controls';
-				echo "<div class='cx-controls-wrapper{$_is_sticky}'>";
+				$_is_sticky = isset( $section['sticky'] ) && ! $section['sticky'] ? ' cv-nonsticky-controls' : ' cv-sticky-controls';
+				echo "<div class='cv-controls-wrapper{$_is_sticky}'>";
 
-				if( $reset_button ) echo "<button type='button' class='button button-hero cx-reset-button' data-option_name='{$section['id']}' data-_nonce='{$_nonce}'>{$reset_button}</button>&nbsp;";
-				if( $submit_button ) echo "<input type='submit' class='button button-hero button-primary cx-submit' value='{$submit_button}' />";
+				if( $reset_button ) echo "<button type='button' class='button button-hero cv-reset-button' data-option_name='{$section['id']}' data-_nonce='{$_nonce}'>{$reset_button}</button>&nbsp;";
+				if( $submit_button ) echo "<input type='submit' class='button button-hero button-primary cv-submit' value='{$submit_button}' />";
 
-				echo '</div class="cx-controls-wrapper">
+				echo '</div class="cv-controls-wrapper">
 				</form>';
 			}
 
-			do_action( 'cx-settings-after-form', $section );
+			do_action( 'cv-settings-after-form', $section );
 
 			echo "</div><!--div id='{$section['id']}'-->";
 		}
 
-		echo '</div><!--div class="cx-sections-wrapper"-->
-			 <div class="cx-sidebar-wrapper">';
+		echo '</div><!--div class="cv-sections-wrapper"-->
+			 <div class="cv-sidebar-wrapper">';
 
-		do_action( 'cx-settings-sidebar', $config );
+		do_action( 'cv-settings-sidebar', $config );
 
-		echo '</div><!--div class="cx-sidebar-wrapper"-->
-			</div><!--div class="cx-wrapper"-->';
+		echo '</div><!--div class="cv-sidebar-wrapper"-->
+			</div><!--div class="cv-wrapper"-->';
 
-		do_action( 'cx-settings-after_wrapper', $config );
+		do_action( 'cv-settings-after_wrapper', $config );
 
-		echo '</div><!--div class="cx-wrapper-outer"-->
+		echo '</div><!--div class="cv-wrapper-outer"-->
 		</div><!--div class="wrap"-->
-		<div id="cx-overlay" style="display: none;">
+		<div id="cv-overlay" style="display: none;">
 			<img src="' . plugins_url( 'assets/img/loading.gif', __FILE__ ) . '" />
 		</div>';
 
@@ -231,54 +231,54 @@ abstract class Fields extends Base {
 		if( count( $fields ) > 0 ) :
 		foreach ( $fields as $field ) {
 		
-			do_action( 'cx-settings-before-row', $field, $section );
+			do_action( 'cv-settings-before-row', $field, $section );
 
 			$_show_label = isset( $field['label'] ) && $field['type'] != 'tabs';
 
 			if( isset( $field['type'] ) && $field['type'] == 'divider' ) {
 				$style = isset( $field['style'] ) ? $field['style'] : '';
-				echo "<div class='cx-row cx-divider' id='{$section['id']}-{$field['id']}' style='{$style}'><span>{$field['label']}</span></div>";
+				echo "<div class='cv-row cv-divider' id='{$section['id']}-{$field['id']}' style='{$style}'><span>{$field['label']}</span></div>";
 			}
 			else {
 				$field_display = isset( $field['condition'] ) && is_array( $field['condition'] ) ? 'none' : '';
 				echo "
-				<div id='cx-row-{$section['id']}-{$field['id']}' class='cx-row cx-row-{$section['id']} cx-row-{$field['type']}' style='display: {$field_display}'>";
+				<div id='cv-row-{$section['id']}-{$field['id']}' class='cv-row cv-row-{$section['id']} cv-row-{$field['type']}' style='display: {$field_display}'>";
 
 				if( $_show_label ) {
-					echo "<div class='cx-label-wrap'>";
+					echo "<div class='cv-label-wrap'>";
 
-					do_action( 'cx-settings-before-label', $field, $section );
+					do_action( 'cv-settings-before-label', $field, $section );
 
 					echo "<label for='{$section['id']}-{$field['id']}'>{$field['label']}</label>";
 
-					do_action( 'cx-settings-after-label', $field, $section );
+					do_action( 'cv-settings-after-label', $field, $section );
 
 					echo "</div>";
 				}
 
-				$_label_class = $_show_label ? '' : 'cx-field-wrap-nolabel';
+				$_label_class = $_show_label ? '' : 'cv-field-wrap-nolabel';
 				
-				echo "<div class='cx-field-wrap {$_label_class}'>";
+				echo "<div class='cv-field-wrap {$_label_class}'>";
 
-					do_action( 'cx-settings-before-field', $field, $section );
+					do_action( 'cv-settings-before-field', $field, $section );
 
 					if( isset( $field['template'] ) && $field['template'] != '' ) echo $field['template'];
 
 					if( isset( $field['type'] ) && $field['type'] != '' ) echo $this->populate( $field, $section, $scope );
 
-					do_action( 'cx-settings-after-field', $field, $section );
+					do_action( 'cv-settings-after-field', $field, $section );
 
 					if( isset( $field['desc'] ) && $field['desc'] != '' ) {
-						echo "<p class='cx-desc'>{$field['desc']}</p>";
+						echo "<p class='cv-desc'>{$field['desc']}</p>";
 					}
 
-				do_action( 'cx-settings-after-description', $field, $section );
+				do_action( 'cv-settings-after-description', $field, $section );
 
 				echo "</div>
 				</div>";
 			}
 			
-			do_action( 'cx-settings-after-row', $field, $section );
+			do_action( 'cv-settings-after-row', $field, $section );
 		}
 		endif; // if( count( $fields ) > 0 ) :
 	}
@@ -307,7 +307,7 @@ abstract class Fields extends Base {
 			return $this->$callback_fn( $field, $section, $scope );
 		}
 
-		return __( 'Invalid field type', 'cx-plugin' );
+		return __( 'Invalid field type', 'cv-plugin' );
 	}
 
 	public function get_value( $field, $section, $default = '', $scope = 'option' ) {
@@ -338,7 +338,7 @@ abstract class Fields extends Base {
 		$label 			= isset( $field['label'] ) ? $field['label'] : '';
 		$id 			= "{$section['id']}-{$field['id']}";
 
-		$class 			= "cx-field cx-field-{$field['type']}";
+		$class 			= "cv-field cv-field-{$field['type']}";
 		$class 			.= isset( $field['class'] ) ? $field['class'] : '';
 
 		$placeholder	= isset( $field['placeholder'] ) ? $field['placeholder'] : '';
@@ -350,7 +350,7 @@ abstract class Fields extends Base {
 		$step 			= isset( $field['step'] ) && $field['step'] ? " step='{$field['step']}'" : "";
 
 		if( $type == 'color' ) {
-			$class .= ' cx-color-picker';
+			$class .= ' cv-color-picker';
 			$type = 'text';
 		}
 
@@ -367,7 +367,7 @@ abstract class Fields extends Base {
 		$label 			= isset( $field['label'] ) ? $field['label'] : '';
 		$id 			= "{$section['id']}-{$field['id']}";
 
-		$class 			= "cx-field cx-field-{$field['type']}";
+		$class 			= "cv-field cv-field-{$field['type']}";
 		$class 			.= isset( $field['class'] ) ? $field['class'] : '';
 
 		$placeholder	= isset( $field['placeholder'] ) ? $field['placeholder'] : '';
@@ -390,7 +390,7 @@ abstract class Fields extends Base {
 		$label 			= isset( $field['label'] ) ? $field['label'] : '';
 		$id 			= "{$section['id']}-{$field['id']}";
 
-		$class 			= "cx-field cx-field-{$field['type']}";
+		$class 			= "cv-field cv-field-{$field['type']}";
 		$class 			.= isset( $field['class'] ) ? $field['class'] : '';
 
 		$placeholder	= isset( $field['placeholder'] ) ? $field['placeholder'] : '';
@@ -416,7 +416,7 @@ abstract class Fields extends Base {
 		$label 			= isset( $field['label'] ) ? $field['label'] : '';
 		$id 			= "{$section['id']}-{$field['id']}";
 
-		$class 			= "cx-field cx-field-{$field['type']}";
+		$class 			= "cv-field cv-field-{$field['type']}";
 		$class 			.= isset( $field['class'] ) ? $field['class'] : '';
 
 		$placeholder	= isset( $field['placeholder'] ) ? $field['placeholder'] : '';
@@ -450,7 +450,7 @@ abstract class Fields extends Base {
 		$label 			= isset( $field['label'] ) ? $field['label'] : '';
 		$id 			= "{$section['id']}-{$field['id']}";
 
-		$class 			= "cx-field cx-field-{$field['type']}";
+		$class 			= "cv-field cv-field-{$field['type']}";
 		$class 			.= isset( $field['class'] ) ? $field['class'] : '';
 
 		$placeholder	= isset( $field['placeholder'] ) ? $field['placeholder'] : '';
@@ -463,19 +463,19 @@ abstract class Fields extends Base {
 		if( $multiple ) {
 			foreach ( $options as $key => $title ) {
 				$html .= "
-					<label class='cx-toggle'>
-						<input type='checkbox' name='{$name}[]' id='{$id}-{$key}' class='cx-toggle-checkbox {$class}' value='{$key}' {$required} {$disabled} " . ( in_array( $key, (array)$value ) ? 'checked' : '' ) . "/>
-						<div class='cx-toggle-switch'></div>
-						<span class='cx-toggle-label'>{$title}</span>
+					<label class='cv-toggle'>
+						<input type='checkbox' name='{$name}[]' id='{$id}-{$key}' class='cv-toggle-checkbox {$class}' value='{$key}' {$required} {$disabled} " . ( in_array( $key, (array)$value ) ? 'checked' : '' ) . "/>
+						<div class='cv-toggle-switch'></div>
+						<span class='cv-toggle-label'>{$title}</span>
 					</label>
 				";
 			}
 		}
 		else {
 			$html .= "
-				<label class='cx-toggle'>
-					<input type='checkbox' name='{$name}' id='{$id}' class='cx-toggle-checkbox {$class}' value='on' {$required} {$disabled} " . checked( $value, 'on', false ) . "/>
-					<div class='cx-toggle-switch'></div>
+				<label class='cv-toggle'>
+					<input type='checkbox' name='{$name}' id='{$id}' class='cv-toggle-checkbox {$class}' value='on' {$required} {$disabled} " . checked( $value, 'on', false ) . "/>
+					<div class='cv-toggle-switch'></div>
 				</label>
 			";
 		}
@@ -491,10 +491,10 @@ abstract class Fields extends Base {
 		$label 			= isset( $field['label'] ) ? $field['label'] : '';
 		$id 			= "{$section['id']}-{$field['id']}";
 
-		$class 			= "cx-field cx-field-{$field['type']}";
+		$class 			= "cv-field cv-field-{$field['type']}";
 		$class 			.= isset( $field['class'] ) ? $field['class'] : '';
-		$class 			.= isset( $field['select2'] ) && $field['select2'] ? ' cx-select2' : '';
-		$class 			.= isset( $field['chosen'] ) && $field['chosen'] ? ' cx-chosen' : '';
+		$class 			.= isset( $field['select2'] ) && $field['select2'] ? ' cv-select2' : '';
+		$class 			.= isset( $field['chosen'] ) && $field['chosen'] ? ' cv-chosen' : '';
 
 		$placeholder	= isset( $field['placeholder'] ) ? $field['placeholder'] : '';
 		$required 		= isset( $field['required'] ) && $field['required'] ? " required" : "";
@@ -542,7 +542,7 @@ abstract class Fields extends Base {
 		$label 			= isset( $field['label'] ) ? $field['label'] : '';
 		$id 			= "{$section['id']}-{$field['id']}";
 
-		$class 			= "cx-field cx-field-{$field['type']}";
+		$class 			= "cv-field cv-field-{$field['type']}";
 		$class 			.= isset( $field['class'] ) ? $field['class'] : '';
 
 		$placeholder	= isset( $field['placeholder'] ) ? $field['placeholder'] : '';
@@ -554,8 +554,8 @@ abstract class Fields extends Base {
 		$select_button	= isset( $field['select_button'] ) ? $field['select_button'] : __( 'Select' );
 
 		$html  = '';
-		$html .= "<input type='text' class='{$class} cx-file' id='{$id}' name='{$name}' value='{$value}' placeholder='{$placeholder}' {$readonly} {$required} {$disabled}/>";
-		$html  .= "<input type='button' class='button cx-browse' data-title='{$label}' data-select-text='{$select_button}' value='{$upload_button}' {$required} {$disabled} />";
+		$html .= "<input type='text' class='{$class} cv-file' id='{$id}' name='{$name}' value='{$value}' placeholder='{$placeholder}' {$readonly} {$required} {$disabled}/>";
+		$html  .= "<input type='button' class='button cv-browse' data-title='{$label}' data-select-text='{$select_button}' value='{$upload_button}' {$required} {$disabled} />";
 
 		return $html;
 	}
@@ -568,7 +568,7 @@ abstract class Fields extends Base {
 		$label 			= isset( $field['label'] ) ? $field['label'] : '';
 		$id 			= "{$section['id']}-{$field['id']}";
 
-		$class 			= "cx-field cx-field-{$field['type']}";
+		$class 			= "cv-field cv-field-{$field['type']}";
 		$class 			.= isset( $field['class'] ) ? $field['class'] : '';
 
 		$placeholder	= isset( $field['placeholder'] ) ? $field['placeholder'] : '';
@@ -608,7 +608,7 @@ abstract class Fields extends Base {
 		$items = $field['items'];
 		$html = '';
 		foreach ( $items as $item ) {
-			$item['class'] = ' cx-field-group';
+			$item['class'] = ' cv-field-group';
 			$html .= $this->populate( $item, $section, $scope );
 		}
 
@@ -625,12 +625,12 @@ abstract class Fields extends Base {
 
 		$count = 0;
 		foreach ( $tabs as $id => $tab ) {
-			$btn_active		= $count == 0 ? 'cx-tab-active' : '';
+			$btn_active		= $count == 0 ? 'cv-tab-active' : '';
 			$cnt_display	= $count == 0 ? '' : 'none';
 
-			$buttons .= "<a class='cx-tab {$btn_active}' data-target='cx-tab-{$section['id']}-{$id}'>{$tab['label']}</a>";
+			$buttons .= "<a class='cv-tab {$btn_active}' data-target='cv-tab-{$section['id']}-{$id}'>{$tab['label']}</a>";
 
-			$content .= "<div class='cx-tab-content' id='cx-tab-{$section['id']}-{$id}' style='display: {$cnt_display}'>";
+			$content .= "<div class='cv-tab-content' id='cv-tab-{$section['id']}-{$id}' style='display: {$cnt_display}'>";
 			
 			ob_start();
 
@@ -654,29 +654,29 @@ abstract class Fields extends Base {
 			$count++;
 		}
 		$style = "<style>
-			.cx-tabs {
+			.cv-tabs {
 				border-bottom: 1px solid {$section['color']};
 				grid-template-columns: " . str_repeat( '1fr ', count( $tabs ) ) . ";
 			}
-			.cx-tab {
+			.cv-tab {
 				border: 1px solid {$section['color']};
 				border-right: 1px solid #fff;
 				border-left: 0px solid #fff;
 				color: #fff;
 				background: {$section['color']};
 			}
-			.cx-tab:last-child {
+			.cv-tab:last-child {
 				border-right: 1px solid {$section['color']};
 			}
-			.cx-tab:first-child {
+			.cv-tab:first-child {
 				border-left: 1px solid {$section['color']};
 			}
-			.cx-tab-active,.cx-tab-active:hover {
+			.cv-tab-active,.cv-tab-active:hover {
 				color: {$section['color']};
 			}
 		</style>";
 
-		$html .= '<nav class="cx-tabs">' . $buttons . '</nav>';
+		$html .= '<nav class="cv-tabs">' . $buttons . '</nav>';
 		$html .= $content;
 		$html .= $style;
 
@@ -692,9 +692,9 @@ abstract class Fields extends Base {
 		$count = 0;
 
 		for( $i = 0; $i < ( is_array( reset( $values ) ) ? count( reset( $values ) ) : 1 ); $i++ ) {
-			$html .= '<div class="cx-repeatable">';
+			$html .= '<div class="cv-repeatable">';
 			foreach ( $items as $item ) {
-				$item['class'] = ' cx-field-group';
+				$item['class'] = ' cv-field-group';
 				$item['default'] = isset( $item['default'] ) ? $item['default'] : '';
 				$item['value'] = isset( $values[ $item['id'] ][ $count ] ) ? $values[ $item['id'] ][ $count ] : $item['default'];
 
@@ -703,8 +703,8 @@ abstract class Fields extends Base {
 				$html .= $this->populate( $item, $section, $scope );
 			}
 
-			$html .= '<button type="button" class="cx-repeater-remove">-</button>';
-			$html .= '<button type="button" class="cx-repeater-add">+</button>';
+			$html .= '<button type="button" class="cv-repeater-remove">-</button>';
+			$html .= '<button type="button" class="cv-repeater-add">+</button>';
 			
 			$html .= '</div>';
 
@@ -717,7 +717,7 @@ abstract class Fields extends Base {
 	public function generate_icon( $value ) {
 		if( $value == '' ) return '';
 		if( strpos( $value, '://' ) !== false ) {
-			return "<img class='cx-icon-{$this->config['id']}' src='{$value}' />";
+			return "<img class='cv-icon-{$this->config['id']}' src='{$value}' />";
 		}
 		return "<span class='dashicons {$value}'></span>";
 	}

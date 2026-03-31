@@ -1,5 +1,5 @@
 <?php
-namespace Codexpert\Plugin;
+namespace Corevia\Plugin;
 
 /**
  * if accessed directly, exit.
@@ -11,7 +11,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * @package Plugin
  * @subpackage Base
- * @author Codexpert <hi@codexpert.io>
+ * @author Sadekur Rahman <shadekur.rahman60@gmail.com>
  */
 abstract class Base {
 
@@ -37,8 +37,8 @@ abstract class Base {
 				if( current_user_can( 'manage_options' ) ) {
 					add_action( ( is_admin() ? 'admin_head' : 'wp_head' ), function() use ( $callback ) {
 						printf(
-							'<div class="notice notice-error cx-notice cx-shadow"><p>%s</p></div>',
-							sprintf( __( 'Hey Dev, it looks like you forgot to define the <code>%1$s()</code> method in the <code>%2$s</code> class!', 'cx-plugin' ), $callback, get_called_class() )
+							'<div class="notice notice-error cv-notice cv-shadow"><p>%s</p></div>',
+							sprintf( __( 'Hey Dev, it looks like you forgot to define the <code>%1$s()</code> method in the <code>%2$s</code> class!', 'cv-plugin' ), $callback, get_called_class() )
 						);
 					} );
 				}
