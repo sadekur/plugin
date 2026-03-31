@@ -1,5 +1,5 @@
 <?php
-namespace corevia\Plugin;
+namespace Corevia\Plugin;
 
 /**
  * if accessed directly, exit.
@@ -11,7 +11,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * @package Plugin
  * @subpackage Metabox
- * @author corevia <hi@corevia.io>
+ * @author Sadekur Rahman <shadekur.rahman60@gmail.com>
  */
 class Metabox extends Fields {
 
