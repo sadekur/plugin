@@ -58,12 +58,12 @@ class Widget extends Base {
 
 		$_links = apply_filters( 'cv-overview_links', [
 			'products'	=> [
-				'url'		=> add_query_arg( $utm, 'https://codexpert.io/products/' ),
+				'url'		=> add_query_arg( $utm, 'https://sadekurrahman.net/products/' ),
 				'label'		=> __( 'Our Plugins', 'cv-plugin' ),
 				'target'	=> '_blank',
 			],
 			'hire'	=> [
-				'url'		=> add_query_arg( $utm, 'https://codexpert.io/blog/' ),
+				'url'		=> add_query_arg( $utm, 'https://sadekurrahman.net/blog/' ),
 				'label'		=> __( 'Blog', 'cv-plugin' ),
 				'target'	=> '_blank',
 			],
