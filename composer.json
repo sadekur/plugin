@@ -1,15 +1,15 @@
 {
-    "name": "codexpert/plugin",
+    "name": "sadekur/plugin",
     "type": "library",
-    "description": "Plugin tools for Codexpert",
-    "keywords": ["plugin","codexpert"],
-    "homepage": "https://bitbucket.org/codexpertio/codexpert-plugin",
+    "description": "Plugin tools for WordPress",
+    "keywords": ["plugin","wordpress", "tool"],
+    "homepage": "https://sadekurrahman.net",
     "license": "GPL-3.0-or-later",
     "authors": [
         {
-            "name": "Codexpert",
-            "email": "hello@codexpert.io",
-            "homepage": "https://codexpert.io",
+            "name": "Sadekur Rahman",
+            "email": "hello@sadekurrahman.net",
+            "homepage": "https://sadekurrahman.net",
             "role": "Developer"
         }
     ],
