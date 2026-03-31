@@ -1,5 +1,5 @@
 <?php
-namespace corevia\Plugin;
+namespace Corevia\Plugin;
 
 error_reporting( 0 );
 
@@ -13,7 +13,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * @package Plugin
  * @subpackage Setup
- * @author corevia <hi@corevia.io>
+ * @author Sadekur Rahman <shadekur.rahman60@gmail.com>
  */
 class Setup extends Base {
 
@@ -35,13 +35,8 @@ class Setup extends Base {
 	
 	public function __construct( $plugin ) {
 
-		$this->plugin	= wp_parse_args( $plugin, [
-			'server'	=> 'https://my.pluggable.io',
-			'hash_wizard'	=> 'a7719b8f-a43b-4c1d-aeb3-2823ef174f54'
-		] );
-		
+		$this->plugin 		= $plugin;		
 		$this->server 		= $this->plugin['server'];
-		$this->hash_wizard 	= $this->plugin['hash_wizard'];
 		$this->slug 		= $this->plugin['TextDomain'];
 		$this->name 		= $this->plugin['Name'];
 		$this->steps 		= $this->plugin['steps'];
