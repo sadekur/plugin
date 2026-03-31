@@ -1,5 +1,5 @@
 <?php
-namespace corevia\Plugin;
+namespace Corevia\Plugin;
 
 /**
  * if accessed directly, exit.
